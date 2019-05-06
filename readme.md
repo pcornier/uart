@@ -1,1 +1,1 @@
-UART transmitter in Verilog.
+UART transmitter & receiver in Verilog.
