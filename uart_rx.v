@@ -4,7 +4,7 @@
 module uart_rx (
   input clk,
   input rx,
-  output [7:0] dout,
+  output reg [7:0] dout,
   output done
 );
 
@@ -13,7 +13,6 @@ reg [2:0] new_state;
 reg [7:0] SR;
 reg [2:0] SC;
 reg [4:0] cycles;
-wire done;
 
 parameter
   IDLE   = 3'd0,
