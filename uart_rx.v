@@ -4,7 +4,8 @@
 module uart_rx (
   input clk,
   input rx,
-  output [7:0] dout
+  output [7:0] dout,
+  output done
 );
 
 reg [2:0] state;
@@ -12,6 +13,7 @@ reg [2:0] new_state;
 reg [7:0] SR;
 reg [2:0] SC;
 reg [4:0] cycles;
+wire done;
 
 parameter
   IDLE   = 3'd0,
@@ -34,7 +36,9 @@ assign clk_en = clk_cnt == 5'd0;
 
 always @(posedge clk_en)
   state <= new_state;
-  
+
+assign done = state == STOP;
+
 always @*
   case (state)
     IDLE: if (rx == 0) new_state = WAIT1;
@@ -70,8 +74,6 @@ always @(posedge clk_en)
   endcase
  
 always @(posedge clk_en)
-  case (state)
-    STOP: if (cycles == 5'd12) dout <= SR;
-  endcase
+  if (state == STOP && cycles == 5'd12) dout <= SR;
   
 endmodule
