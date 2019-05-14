@@ -1,6 +1,4 @@
 
-/* verilator lint_off CASEINCOMPLETE */
-
 module uart_rx (
   input clk,
   input rx,
